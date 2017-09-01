@@ -7,10 +7,10 @@ from spider_baidu import html_outputer
 
 class SpiderMain(object):
     def __init__(self):
-        self.urls       = url_manager.urlManager()
-        self.downloader = html_downloader.downloader()
-        self.parser     = html_parser.parser()
-        self.outputer   = html_outputer.outputer()
+        self.urls       = url_manager.UrlManager()
+        self.downloader = html_downloader.Downloader()
+        self.parser     = html_parser.Htmlparser()
+        self.outputer   = html_outputer.Outputer()
 
     def craw(self, root_url):
         self.urls.add_new_url(root_url)
@@ -20,7 +20,7 @@ class SpiderMain(object):
                 count = 1
                 new_url = self.urls.get_new_url()
                 print("craw %d") % count
-                html_cont = self.downloader.downloader(new_url)
+                html_cont = self.downloader.download(new_url)
                 new_url, new_data = self.html_parser.parser(new_url, html_cont)
                 self.urls.add_new_urls(new_url)
                 self.outputer.collect_data()

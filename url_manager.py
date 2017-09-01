@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-class urlManager(object):
+class UrlManager(object):
 
     def __init__():
         self.new_urls = set()
