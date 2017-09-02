@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from spider_baidu import url_manager
-from spider_baidu import html_downloader
-from spider_baidu import html_parser
-from spider_baidu import html_outputer
+import url_manager
+import html_downloader
+import html_parser
+import html_outputer
 
 class SpiderMain(object):
     def __init__(self):
@@ -13,24 +13,25 @@ class SpiderMain(object):
         self.outputer   = html_outputer.Outputer()
 
     def craw(self, root_url):
+        count = 1
         self.urls.add_new_url(root_url)
 
         while self.urls.has_new_url():
             try:
-                count = 1
                 new_url = self.urls.get_new_url()
-                print("craw %d") % count
+                print("craw %d" % count)
                 html_cont = self.downloader.download(new_url)
-                new_url, new_data = self.html_parser.parser(new_url, html_cont)
+                new_url, new_data = self.parser.parse(new_url, html_cont)
                 self.urls.add_new_urls(new_url)
-                self.outputer.collect_data()
+                self.outputer.collect_data(new_data)
 
-                if count == 1000:
+                if count == 3:
                     break
 
                 count = count + 1
             except:
                 print("craw fail!")
+
 
         self.outputer.outputer_html()
 
